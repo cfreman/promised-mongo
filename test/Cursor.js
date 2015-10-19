@@ -214,5 +214,21 @@ describe('Cursor', function () {
       expect(result).to.be.an.instanceof(Array);
       expect(result.length).to.equal(4);
     });
+
+    it('should be able to handle lots of documents', async function () {
+      const docsToInsert = [], numDocs = 600;
+      for (let i = 0; i < numDocs; i++) {
+        docsToInsert[i] = {
+          i,
+          name: `Pokemon ID #${i}`
+        };
+      }
+      await collection.insert(docsToInsert);
+
+      let result = await collection.find().toArray();
+
+      expect(result).to.be.an.instanceof(Array);
+      expect(result.length).to.equal(numDocs);
+    });
   });
 });

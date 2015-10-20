@@ -1,7 +1,6 @@
 import {expect} from 'chai';
 import Database from '../lib/Database';
 
-require('bluebird').longStackTraces();
 
 
 describe('Database', function () {

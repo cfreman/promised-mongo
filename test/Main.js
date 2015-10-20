@@ -3,8 +3,6 @@
 import {expect} from 'chai';
 import pmongo from '../index.js';
 
-require('bluebird').longStackTraces();
-
 
 describe('Main', function () {
 

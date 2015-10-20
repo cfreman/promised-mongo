@@ -2,8 +2,6 @@ import {expect} from 'chai';
 import Database from '../lib/Database';
 import Cursor from '../lib/Cursor';
 
-require('bluebird').longStackTraces();
-
 
 describe('Cursor', function () {
   let db, collection;

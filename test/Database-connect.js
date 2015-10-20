@@ -3,8 +3,6 @@
 import {expect} from 'chai';
 import Database from '../lib/Database';
 
-require('bluebird').longStackTraces();
-
 
 describe('Database-connect', function () {
   describe('connect', function () {

@@ -1,5 +1,3 @@
-
-
 import {expect} from 'chai';
 import Database from '../lib/Database';
 
@@ -13,8 +11,9 @@ describe('Database-connect', function () {
     });
 
     it('throws an error on invalid domain', async function() {
-      let db = new Database('mongodb://invaliddomain/', {emitError: true, reconnect: false});
+
       try {
+        let db = new Database('mongodb://invaliddomain/', {emitError: true, reconnect: false});
         await db.connect();
         throw new Error("shouldn't get here");
       } catch (e) {
@@ -23,9 +22,9 @@ describe('Database-connect', function () {
     });
 
     it('throws an error on timeout', async function() {
-      let db = new Database('mongodb://10.255.255.1/pmongo_test', {emitError: true, reconnect: false, connectionTimeout: 1});
 
       try {
+        let db = new Database('mongodb://10.255.255.1/pmongo_test', {emitError: true, reconnect: false, connectionTimeout: 1});
         await db.connect();
         throw new Error("shouldn't get here");
       } catch (e) {

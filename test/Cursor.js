@@ -214,14 +214,19 @@ describe('Cursor', function () {
     });
 
     it('should be able to handle lots of documents', async function () {
-      const docsToInsert = [], numDocs = 600;
-      for (let i = 0; i < numDocs; i++) {
-        docsToInsert[i] = {
-          i,
-          name: `Pokemon ID #${i}`
-        };
+      this.timeout(10000);
+
+      const numDocs = 10000; // max batch write size is 1000
+      let added = 0;
+
+      while(added < numDocs) {
+        const docsToInsert = []
+        for (let i = 0; i < 1000 && added < numDocs; i++) {
+          docsToInsert[i] = { i, name: `Pokemon ID #${added}` };
+          added++;
+        }
+        await collection.insert(docsToInsert);
       }
-      await collection.insert(docsToInsert);
 
       let result = await collection.find().toArray();
 

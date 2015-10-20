@@ -23,7 +23,7 @@ describe('Collection', function () {
         { name: 'Lapras', type: 'water' }
       ]);
 
-      let result = await collection.aggregate({$group: {_id: '$type'}});
+      let result = await collection.aggregate([{$group: {_id: '$type'}}]);
       expect(result).to.deep.have.members([{_id: 'water' }, {_id: 'fire'}]);
     });
   });
@@ -37,7 +37,7 @@ describe('Collection', function () {
         { name: 'Lapras', type: 'water' }
       ]);
 
-      let cursor = collection.aggregateCursor({$group: {_id: '$type'}});
+      let cursor = collection.aggregateCursor([{$group: {_id: '$type'}}]);
       expect(cursor).to.be.an.instanceof(Cursor);
       let result = await cursor.toArray();
       expect(result).to.deep.have.members([{_id: 'water' }, {_id: 'fire'}]);

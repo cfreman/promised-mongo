@@ -4,8 +4,7 @@ module.exports = function (grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: 'lib/',
-          src: ['**/*.js'],
+          src: ['lib/**/*.js', 'test/**/*.js', 'index.js'],
           dest: 'dist/'
         }]
       }

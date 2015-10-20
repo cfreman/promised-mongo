@@ -4,6 +4,7 @@ import Database from '../lib/Database';
 
 describe('Database-connect', function () {
   describe('connect', function () {
+
     it('succeeds', async function() {
       let db = new Database('pmongo_test');
       let result = await db.connect();
@@ -11,18 +12,21 @@ describe('Database-connect', function () {
     });
 
     it('throws an error on invalid domain', async function() {
-
+      this.timeout(5000);
       try {
-        let db = new Database('mongodb://invaliddomain/', {emitError: true, reconnect: false});
+        let db = new Database('mongodb://invaliddomain/', {
+          emitError: true,
+          reconnect: false,
+          reconnectInterval: null
+        });
         await db.connect();
         throw new Error("shouldn't get here");
       } catch (e) {
-        expect(e.message).to.contain('getaddrinfo ENOTFOUND invaliddomain');
+        expect(e.message).to.contain('getaddrinfo ENOTFOUND');
       }
     });
 
     it('throws an error on timeout', async function() {
-
       try {
         let db = new Database('mongodb://10.255.255.1/pmongo_test', {emitError: true, reconnect: false, connectionTimeout: 1});
         await db.connect();
@@ -32,5 +36,6 @@ describe('Database-connect', function () {
         expect(e.message).to.contain('timed out');
       }
     });
+
   });
 });

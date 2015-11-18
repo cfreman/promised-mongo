@@ -37,6 +37,7 @@ var _Cursor2 = _interopRequireDefault(_Cursor);
 var Server = _mongodbCore2['default'].Server;
 var ReplSet = _mongodbCore2['default'].ReplSet;
 var MongoCR = _mongodbCore2['default'].MongoCR;
+var ScramSHA1 = _mongodbCore2['default'].ScramSHA1;
 
 var Database = (function () {
   function Database(connectionString, options, collections) {
@@ -175,9 +176,11 @@ var Database = (function () {
 
           if (config.auth) {
             server.addAuthProvider('mongocr', new MongoCR());
+            server.addAuthProvider('ScramSHA1', new ScramSHA1());
             // authenticate on connect
             server.on('connect', function (server) {
-              server.auth('mongocr', config.dbName, config.auth.user, config.auth.password, function (error, server) {
+              var providerName = options.authMechanism ? options.authMechanism : 'mongocr';
+              server.auth(providerName, config.dbName, config.auth.user, config.auth.password, function (error, server) {
                 if (error) {
                   reject(error);
                 } else {
